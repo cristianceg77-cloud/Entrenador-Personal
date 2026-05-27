@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport: " content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Mi Entrenamiento</title>
   
   <!-- PWA Meta Tags -->
@@ -15,14 +15,57 @@
   <!-- Estilos -->
   <link rel="stylesheet" href="styles.css">
   
-  <!-- Google Fonts: Inter para un look moderno y limpio -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ── Fixes de contraste y altura ── */
+    html, body { height: 100%; }
+    .app-container { min-height: 100dvh; }
+
+    /* Nombre editable inline en el header */
+    #header-user-name {
+      cursor: pointer;
+      border-bottom: 1.5px dashed rgba(255,255,255,.3);
+      padding-bottom: 2px;
+      transition: border-color .2s;
+      outline: none;
+      min-width: 60px;
+      display: inline-block;
+    }
+    #header-user-name:focus {
+      border-bottom-color: #38bdf8;
+    }
+    #header-user-name:focus::after {
+      content: none;
+    }
+    .name-edit-hint {
+      font-size: 10px;
+      color: rgba(255,255,255,.35);
+      letter-spacing: .3px;
+      margin-top: 1px;
+      display: block;
+    }
+
+    /* Mejor contraste en textos secundarios */
+    .item-meta, .item-notes, .greeting-text,
+    .menu-card p, .radio-desc, .stat-label,
+    .about-card p, .danger-zone p,
+    .welcome-text p {
+      color: #cbd5e1 !important;
+    }
+    .menu-card h3, .stat-value, .item-title,
+    .welcome-text h2, h1, h2, h3, h4 {
+      color: #f1f5f9 !important;
+    }
+    label { color: #e2e8f0 !important; }
+    .pwa-badge { color: #94a3b8 !important; }
+  </style>
 </head>
 <body>
 
-  <!-- App Shell -->
   <div class="app-container">
     
     <!-- Header Principal -->
@@ -30,7 +73,14 @@
       <div class="header-content">
         <div class="user-greeting">
           <span class="greeting-text">Hola,</span>
-          <h1 id="header-user-name" class="user-name">Atleta</h1>
+          <h1
+            id="header-user-name"
+            class="user-name"
+            contenteditable="true"
+            spellcheck="false"
+            title="Tocá para editar tu nombre"
+          >Atleta</h1>
+          <span class="name-edit-hint">✏️ tocá para editar</span>
         </div>
         <div class="user-badge" id="header-user-badge">
           <span id="user-objective-badge">Ganar masa</span>
@@ -38,7 +88,6 @@
       </div>
     </header>
 
-    <!-- Pestañas de Navegación / Pantalla de Inicio -->
     <main class="app-main">
       
       <!-- VISTA INICIO -->
@@ -83,7 +132,6 @@
           </button>
         </div>
 
-        <!-- Resumen rápido de la última actividad -->
         <div class="recent-box">
           <div class="box-header">
             <h4>Última Actividad</h4>
@@ -154,9 +202,7 @@
 
         <div class="records-container">
           <h3 class="container-title">Historial Reciente</h3>
-          <div id="workout-list" class="list-placeholder">
-            <!-- Los registros se inyectarán aquí dinámicamente -->
-          </div>
+          <div id="workout-list" class="list-placeholder"></div>
         </div>
       </section>
 
@@ -179,7 +225,6 @@
               <option value="all">Todos los Ejercicios</option>
             </select>
           </div>
-          
           <div class="canvas-wrapper">
             <canvas id="progress-canvas"></canvas>
             <div id="no-chart-data" class="chart-empty-msg">
@@ -192,7 +237,6 @@
           </div>
         </div>
 
-        <!-- Estadísticas -->
         <div class="stats-grid">
           <div class="stat-card">
             <span class="stat-label">Total Entrenamientos</span>
@@ -247,7 +291,6 @@
                   </div>
                 </div>
               </label>
-
               <label class="radio-card">
                 <input type="radio" name="user-objective" value="Ganar masa">
                 <div class="radio-content">
@@ -258,7 +301,6 @@
                   </div>
                 </div>
               </label>
-
               <label class="radio-card">
                 <input type="radio" name="user-objective" value="Tonificar">
                 <div class="radio-content">
@@ -283,13 +325,13 @@
         <div class="about-card">
           <h4>Acerca de la App</h4>
           <p>Entrenamiento Tracker PWA. Funciona 100% offline y almacena localmente todos tus registros de forma segura.</p>
-          <div class="pwa-badge">Versión 1.1.0 • PWA Autónoma</div>
+          <div class="pwa-badge">Versión 1.2.0 • PWA Autónoma</div>
         </div>
       </section>
 
     </main>
 
-    <!-- Barra de Navegación Nav-Bar Inferior Móvil -->
+    <!-- Nav inferior -->
     <nav class="bottom-nav">
       <button class="nav-item active" id="nav-inicio" onclick="switchView('view-inicio')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
@@ -311,14 +353,37 @@
       </button>
       <button class="nav-item" id="nav-configuracion" onclick="switchView('view-configuracion')">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
-          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32.37.29c.22-.08.47 0 .59.22O"/>
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
         </svg>
         <span>Ajustes</span>
       </button>
     </nav>
   </div>
 
-  <script src="app.js"><script src="app.js"></script>
-<script src="timer.js"></script>  ← agregar esto
+  <script src="app.js"></script>
+  <script src="timer.js"></script>
+
+  <!-- Nombre editable inline: guarda al perder foco o presionar Enter -->
+  <script>
+    (function() {
+      const el = document.getElementById('header-user-name');
+      if (!el) return;
+      function saveName() {
+        const name = el.textContent.trim();
+        if (!name) { el.textContent = 'Atleta'; return; }
+        // Actualizar perfil en app.js
+        if (typeof userProfile !== 'undefined') {
+          userProfile.name = name;
+          if (typeof saveProfile === 'function') saveProfile();
+        }
+        const inp = document.getElementById('user-name-input');
+        if (inp) inp.value = name;
+      }
+      el.addEventListener('blur', saveName);
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
+      });
+    })();
+  </script>
 </body>
 </html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport: " content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Mi Entrenamiento</title>
+  
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css">
+  
+  <!-- Google Fonts: Inter para un look moderno y limpio -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- App Shell -->
+  <div class="app-container">
+    
+    <!-- Header Principal -->
+    <header class="main-header">
+      <div class="header-content">
+        <div class="user-greeting">
+          <span class="greeting-text">Hola,</span>
+          <h1 id="header-user-name" class="user-name">Atleta</h1>
+        </div>
+        <div class="user-badge" id="header-user-badge">
+          <span id="user-objective-badge">Ganar masa</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Pestañas de Navegación / Pantalla de Inicio -->
+    <main class="app-main">
+      
+      <!-- VISTA INICIO -->
+      <section id="view-inicio" class="view active">
+        <div class="welcome-card">
+          <div class="welcome-icon">⚡</div>
+          <div class="welcome-text">
+            <h2>¿Listo para superar tus límites hoy?</h2>
+            <p>Registra tus series para hacer un seguimiento preciso de tu fuerza.</p>
+          </div>
+        </div>
+
+        <div class="menu-grid">
+          <button class="menu-card" onclick="switchView('view-registrar')">
+            <div class="card-icon register-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+              </svg>
+            </div>
+            <h3>Registrar Entrenamiento</h3>
+            <p>Añade ejercicios, series y pesos</p>
+          </button>
+
+          <button class="menu-card" onclick="switchView('view-progreso')">
+            <div class="card-icon progress-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/>
+              </svg>
+            </div>
+            <h3>Mi Progreso</h3>
+            <p>Gráficas y estadísticas de fuerza</p>
+          </button>
+
+          <button class="menu-card" onclick="switchView('view-configuracion')">
+            <div class="card-icon config-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+              </svg>
+            </div>
+            <h3>Configuración</h3>
+            <p>Personaliza tu perfil y objetivo</p>
+          </button>
+        </div>
+
+        <!-- Resumen rápido de la última actividad -->
+        <div class="recent-box">
+          <div class="box-header">
+            <h4>Última Actividad</h4>
+          </div>
+          <div id="quick-recent-workout" class="quick-status-empty">
+            No hay entrenamientos registrados aún. ¡Registra el primero!
+          </div>
+        </div>
+      </section>
+
+      <!-- VISTA REGISTRAR -->
+      <section id="view-registrar" class="view">
+        <div class="section-nav">
+          <button class="btn-back" onclick="switchView('view-inicio')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            <span>Atrás</span>
+          </button>
+          <h2>Nuevo Registro</h2>
+        </div>
+
+        <form id="workout-form" class="custom-form">
+          <div class="form-group">
+            <label for="workout-type">Ejercicio o Grupo Muscular</label>
+            <input type="text" id="workout-type" placeholder="Ej. Press Banca, Sentadillas, Espalda" required list="exercise-suggestions">
+            <datalist id="exercise-suggestions">
+              <option value="Sentadillas">
+              <option value="Press de Banca">
+              <option value="Peso Muerto">
+              <option value="Dominadas">
+              <option value="Prensa de Piernas">
+              <option value="Press Militar">
+              <option value="Curl de Bíceps">
+              <option value="Extensión de Tríceps">
+              <option value="Remo con Barra">
+              <option value="Zancadas">
+            </datalist>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="workout-sets">Series</label>
+              <input type="number" id="workout-sets" min="1" max="20" value="4" required>
+            </div>
+            <div class="form-group">
+              <label for="workout-reps">Reps (Promedio)</label>
+              <input type="number" id="workout-reps" min="1" max="100" value="10" required>
+            </div>
+            <div class="form-group">
+              <label for="workout-weight">Peso (kg)</label>
+              <input type="number" id="workout-weight" min="0" max="1000" step="0.5" value="60" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="workout-notes">Notas / Observaciones</label>
+            <textarea id="workout-notes" rows="2" placeholder="Ej. Sentí buena congestión, subir peso la próxima semana"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <span>Guardar Entrenamiento</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+          </button>
+        </form>
+
+        <div class="records-container">
+          <h3 class="container-title">Historial Reciente</h3>
+          <div id="workout-list" class="list-placeholder">
+            <!-- Los registros se inyectarán aquí dinámicamente -->
+          </div>
+        </div>
+      </section>
+
+      <!-- VISTA PROGRESO -->
+      <section id="view-progreso" class="view">
+        <div class="section-nav">
+          <button class="btn-back" onclick="switchView('view-inicio')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            <span>Atrás</span>
+          </button>
+          <h2>Mi Progreso</h2>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <h3>Evolución de Cargas</h3>
+            <select id="chart-exercise-filter" class="chart-select">
+              <option value="all">Todos los Ejercicios</option>
+            </select>
+          </div>
+          
+          <div class="canvas-wrapper">
+            <canvas id="progress-canvas"></canvas>
+            <div id="no-chart-data" class="chart-empty-msg">
+              Registra diferentes entrenamientos para trazar tu gráfica de progreso.
+            </div>
+          </div>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="dot primary"></span> Carga Máxima (kg)</span>
+            <span class="legend-item"><span class="dot secondary"></span> Volumen (Series × Reps)</span>
+          </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">Total Entrenamientos</span>
+            <span id="stat-total-workouts" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Carga Máxima</span>
+            <span id="stat-max-weight" class="stat-value">0 kg</span>
+          </div>
+        </div>
+
+        <div class="danger-zone">
+          <h3>Borrar Datos</h3>
+          <p>Esta acción eliminará de forma permanente todo tu historial de entrenamiento y configuración local.</p>
+          <button id="btn-clear-data" class="btn-danger">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
+            <span>Reiniciar Todos los Datos</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- VISTA CONFIGURACION -->
+      <section id="view-configuracion" class="view">
+        <div class="section-nav">
+          <button class="btn-back" onclick="switchView('view-inicio')">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            <span>Atrás</span>
+          </button>
+          <h2>Configuración</h2>
+        </div>
+
+        <form id="config-form" class="custom-form">
+          <div class="form-group">
+            <label for="user-name-input">Nombre del Deportista / Cliente</label>
+            <input type="text" id="user-name-input" placeholder="Tu nombre o Nickname" required>
+          </div>
+
+          <div class="form-group">
+            <label>Objetivo de Entrenamiento</label>
+            <div class="radio-selectors">
+              <label class="radio-card">
+                <input type="radio" name="user-objective" value="Bajar grasa" checked>
+                <div class="radio-content">
+                  <span class="radio-emoji">💪</span>
+                  <div class="radio-txt">
+                    <span class="radio-title">Bajar grasa</span>
+                    <span class="radio-desc">Déficit calórico, tonificación muscular extrema</span>
+                  </div>
+                </div>
+              </label>
+
+              <label class="radio-card">
+                <input type="radio" name="user-objective" value="Ganar masa">
+                <div class="radio-content">
+                  <span class="radio-emoji">🔥</span>
+                  <div class="radio-txt">
+                    <span class="radio-title">Ganar masa muscular</span>
+                    <span class="radio-desc">Superavit calórico, hipertrofia enfocada</span>
+                  </div>
+                </div>
+              </label>
+
+              <label class="radio-card">
+                <input type="radio" name="user-objective" value="Tonificar">
+                <div class="radio-content">
+                  <span class="radio-emoji">✨</span>
+                  <div class="radio-txt">
+                    <span class="radio-title">Tonificar y Fuerza</span>
+                    <span class="radio-desc">Mantenimiento de grasa, ganancia de potencia</span>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <span>Guardar Configuración</span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+            </svg>
+          </button>
+        </form>
+
+        <div class="about-card">
+          <h4>Acerca de la App</h4>
+          <p>Entrenamiento Tracker PWA. Funciona 100% offline y almacena localmente todos tus registros de forma segura.</p>
+          <div class="pwa-badge">Versión 1.1.0 • PWA Autónoma</div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Barra de Navegación Nav-Bar Inferior Móvil -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" id="nav-inicio" onclick="switchView('view-inicio')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" id="nav-registrar" onclick="switchView('view-registrar')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+        <span>Registrar</span>
+      </button>
+      <button class="nav-item" id="nav-progreso" onclick="switchView('view-progreso')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+          <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6h-6z"/>
+        </svg>
+        <span>Progreso</span>
+      </button>
+      <button class="nav-item" id="nav-configuracion" onclick="switchView('view-configuracion')">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="nav-icon">
+          <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32.37.29c.22-.08.47 0 .59.22O"/>
+        </svg>
+        <span>Ajustes</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

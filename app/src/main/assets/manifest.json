@@ -1,0 +1,25 @@
+{
+  "name": "Mi Entrenamiento - Tracker Personal",
+  "short_name": "Entrenamiento",
+  "description": "Tu entrenador personal y registro inteligente para monitorizar cargas, fuerza e hipertrofia.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "categories": ["fitness", "sports"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

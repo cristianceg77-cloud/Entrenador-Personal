@@ -1,0 +1,6 @@
+{
+  "name": "Mi Entrenamiento",
+  "description": "Fitness Tracker simple para un Personal Trainer con gráficos, registro de carga y PWA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
